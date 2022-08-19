@@ -52,6 +52,7 @@ function AuthProvider({ children }) {
     function logOut() {
         signOut(auth).then(() => {
             setUser(null);
+            setError(null);
         }).catch(error => {
             setError(error);
         }
