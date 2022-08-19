@@ -119,7 +119,7 @@ function AuthProvider({ children }) {
                 //navigate to "/verify-email";
                 // router.push("/verify-email");
             }).catch(error => {
-                setError(error);
+                setError("Custom error for verify" + error);
                 setUserLoading(false);
             }
             );
