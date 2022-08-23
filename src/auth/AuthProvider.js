@@ -106,11 +106,9 @@ function AuthProvider({ children }) {
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json; charset=UTF-8',
-                    'Access-Control-Allow-Origin': '*',
-                    'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
-                    'Access-Control-Allow-Headers': 'Content-Type, Authorization, Content-Length, X-Requested-With'
                 },
-            });
+            }, { mode: 'no-cors' }
+        );
         const resBody = await res.json();
         if (res.status !== 200) {
             throw Error(resBody.message)
