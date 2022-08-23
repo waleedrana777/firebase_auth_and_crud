@@ -66,10 +66,11 @@ function AuthProvider({ children }) {
     };
 
     function resetPassword(email) {
+        setError(null);
         sendPasswordResetEmail(auth, email, actionCodeSettings)
             .then(() => {
                 setIsPasswordBeingReset(true);
-                toast.success("Email sent");
+                toast.success("Email sent at " + email);
                 setUserLoading(false);
             }).catch(error => {
                 setError(error);
@@ -93,11 +94,11 @@ function AuthProvider({ children }) {
 
     async function sendVerificationEmail(userEmail) {
         const res = await fetch('https://customized-email-body-firebase.vercel.app/send-custom-verification-email', {
+        // const res = await fetch('http://localhost:8000/send-custom-verification-email', {
             method: 'POST',
             body: JSON.stringify({
                 userEmail,
-                redirectUrl: 'https://firebase-auth-and-crud.vercel.app/'
-                // redirectUrl: 'http://localhost:3000'
+                redirectUrl: process.env.REACT_APP_EMAIL_VERIFICATION_REDIRECT
             }),
             headers: {
                 'Accept': 'application/json',
@@ -113,14 +114,13 @@ function AuthProvider({ children }) {
     }
 
     function verifyEmail(userEmail) {
+        setError(null);
         sendVerificationEmail(userEmail)
             .then(() => {
                 toast.success("Email sent");
                 setUserLoading(false);
-                //navigate to "/verify-email";
-                // router.push("/verify-email");
             }).catch(error => {
-                setError("Custom error for verify" + error);
+                setError(error.message);
                 setUserLoading(false);
             }
             );
