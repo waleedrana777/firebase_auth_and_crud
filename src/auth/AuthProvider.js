@@ -107,7 +107,7 @@ function AuthProvider({ children }) {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json; charset=UTF-8',
                 },
-            }, { mode: 'no-cors' }
+            }, { mode: 'cors' }
         );
         const resBody = await res.json();
         if (res.status !== 200) {
