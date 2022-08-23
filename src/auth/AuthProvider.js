@@ -93,23 +93,25 @@ function AuthProvider({ children }) {
     }
 
     async function sendVerificationEmail(userEmail) {
-        const res = await fetch('https://customized-email-body-firebase.vercel.app/send-custom-verification-email', {
-        // const res = await fetch('http://localhost:8000/send-custom-verification-email', {
-            method: 'POST',
-            body: JSON.stringify({
-                userEmail,
-                redirectUrl: process.env.REACT_APP_EMAIL_VERIFICATION_REDIRECT
-            }),
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json; charset=UTF-8',
-            },
-        })
+        const res = await fetch(
+            process.env.REACT_APP_EMAIL_VERIFICATION_LINK + "/send-custom-verification-email",
+            {
+                method: 'POST',
+                body: JSON.stringify(
+                    {
+                        userEmail,
+                        redirectUrl: process.env.REACT_APP_EMAIL_VERIFICATION_REDIRECT
+                    }
+                ),
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json; charset=UTF-8',
+                },
+            });
         const resBody = await res.json();
         if (res.status !== 200) {
             throw Error(resBody.message)
         }
-
         return resBody
     }
 
