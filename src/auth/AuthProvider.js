@@ -101,7 +101,7 @@ function AuthProvider({ children }) {
                 body: JSON.stringify(
                     {
                         userEmail,
-                        redirectUrl: process.env.REACT_APP_EMAIL_VERIFICATION_REDIRECT + "/"
+                        redirectUrl: process.env.REACT_APP_EMAIL_VERIFICATION_REDIRECT_URL
                     }
                 ),
                 headers: {
