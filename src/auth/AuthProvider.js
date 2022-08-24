@@ -94,13 +94,13 @@ function AuthProvider({ children }) {
 
     async function sendVerificationEmail(userEmail) {
         const res = await fetch(
-            process.env.REACT_APP_EMAIL_VERIFICATION_LINK + "send-custom-verification-email",
+            process.env.REACT_APP_EMAIL_VERIFICATION_LINK + "/send-custom-verification-email",
             {
                 method: 'POST',
                 body: JSON.stringify(
                     {
                         userEmail,
-                        redirectUrl: process.env.REACT_APP_EMAIL_VERIFICATION_REDIRECT
+                        redirectUrl: process.env.REACT_APP_EMAIL_VERIFICATION_REDIRECT + "/"
                     }
                 ),
                 headers: {
