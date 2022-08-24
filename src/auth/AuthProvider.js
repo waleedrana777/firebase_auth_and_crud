@@ -112,17 +112,19 @@ function AuthProvider({ children }) {
                     },
                 },
             );
-
             const resBody = await res.json();
-            return resBody
-        }
-        catch (error) {
+
             if (res.status === 401) {
                 throw new Error("401" + resBody.message);
             }
             if (res.status !== 200) {
                 throw Error("REACT_err :" + resBody.message);
             }
+
+            return resBody
+        }
+        catch (error) {
+            toast.error(error);
         }
 
     }
