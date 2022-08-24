@@ -113,7 +113,7 @@ function AuthProvider({ children }) {
                 },
             },
         );
-        console.log(res)
+        //if no response, it gives unexpected end of input error when parsing json and when cors is not setup, so no cors error is thrown but no response is received
         const resBody = await res.json();
 
         if (res.status === 401) {
