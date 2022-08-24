@@ -112,7 +112,7 @@ function AuthProvider({ children }) {
         );
         const resBody = await res.json();
         if (res.status !== 200) {
-            throw Error(resBody.message)
+            throw Error("REACT_err :" + resBody.message);
         }
         return resBody
     }
