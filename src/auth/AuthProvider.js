@@ -93,11 +93,14 @@ function AuthProvider({ children }) {
     }
 
     async function sendVerificationEmail(userEmail) {
+        // if (user) {
+        // if (user.emailVerified) {
+        console.log(process.env.REACT_APP_EMAIL_VERIFICATION_REDIRECT_URL);
         const res = await fetch(
             process.env.REACT_APP_EMAIL_VERIFICATION_LINK + "/send-custom-verification-email",
             {
                 method: 'POST',
-                mode: 'no-cors',
+                // mode: 'no-cors', //used to avoid cors error and no options request
                 body: JSON.stringify(
                     {
                         userEmail,
@@ -110,6 +113,7 @@ function AuthProvider({ children }) {
                 },
             },
         );
+        console.log(res)
         const resBody = await res.json();
 
         if (res.status === 401) {
@@ -120,8 +124,11 @@ function AuthProvider({ children }) {
         }
 
         return resBody
-
+        // }
+        // }
     }
+
+
 
     function verifyEmail(userEmail) {
         setError(null);
