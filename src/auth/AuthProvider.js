@@ -97,7 +97,7 @@ function AuthProvider({ children }) {
             process.env.REACT_APP_EMAIL_VERIFICATION_LINK + "/send-custom-verification-email",
             {
                 method: 'POST',
-                mode: 'no-cors',
+                // mode: 'no-cors',
                 body: JSON.stringify(
                     {
                         userEmail,
