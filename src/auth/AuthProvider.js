@@ -94,7 +94,7 @@ function AuthProvider({ children }) {
 
     async function sendVerificationEmail(userEmail) {
         const res = await fetch(
-            process.env.REACT_APP_EMAIL_VERIFICATION_LINK + "/send-custom-verification-email",
+            process.env.REACT_APP_EMAIL_VERIFICATION_LINK + "send-custom-verification-email",
             {
                 method: 'POST',
                 body: JSON.stringify(
@@ -107,7 +107,7 @@ function AuthProvider({ children }) {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json; charset=UTF-8',
                 },
-            }, { mode: 'cors' }
+            }
         );
         const resBody = await res.json();
         if (res.status !== 200) {
