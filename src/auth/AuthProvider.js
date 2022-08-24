@@ -107,16 +107,20 @@ function AuthProvider({ children }) {
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json; charset=UTF-8',
+                    'Access-Control-Allow-Headers': 'Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With'
                 },
             },
-        );
+        ).catch(error => {
+            if (res.status === 401) {
+                7
+                throw new Error("401" + resBody.message);
+            }
+            if (res.status !== 200) {
+                throw Error("REACT_err :" + resBody.message);
+            }
+        });
 
-        if (res.status === 401) {
-            throw new Error("401" + resBody.message);
-        }
-        if (res.status !== 200) {
-            throw Error("REACT_err :" + resBody.message);
-        }
+
 
         const resBody = await res.json();
         return resBody
