@@ -93,37 +93,38 @@ function AuthProvider({ children }) {
     }
 
     async function sendVerificationEmail(userEmail) {
-        const res = await fetch(
-            process.env.REACT_APP_EMAIL_VERIFICATION_LINK + "/send-custom-verification-email",
-            {
-                method: 'POST',
-                mode: 'no-cors',
-                body: JSON.stringify(
-                    {
-                        userEmail,
-                        redirectUrl: process.env.REACT_APP_EMAIL_VERIFICATION_REDIRECT_URL
-                    }
-                ),
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json; charset=UTF-8',
-                    'Access-Control-Allow-Headers': 'Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With'
+        try {
+            const res = await fetch(
+                process.env.REACT_APP_EMAIL_VERIFICATION_LINK + "/send-custom-verification-email",
+                {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    body: JSON.stringify(
+                        {
+                            userEmail,
+                            redirectUrl: process.env.REACT_APP_EMAIL_VERIFICATION_REDIRECT_URL
+                        }
+                    ),
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json; charset=UTF-8',
+                        'Access-Control-Allow-Headers': 'Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With'
+                    },
                 },
-            },
-        ).catch(error => {
+            );
+
+            const resBody = await res.json();
+            return resBody
+        }
+        catch (error) {
             if (res.status === 401) {
-                7
                 throw new Error("401" + resBody.message);
             }
             if (res.status !== 200) {
                 throw Error("REACT_err :" + resBody.message);
             }
-        });
+        }
 
-
-
-        const resBody = await res.json();
-        return resBody
     }
 
     function verifyEmail(userEmail) {
