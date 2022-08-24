@@ -93,53 +93,48 @@ function AuthProvider({ children }) {
     }
 
     async function sendVerificationEmail(userEmail) {
-        try {
-            const res = await fetch(
-                process.env.REACT_APP_EMAIL_VERIFICATION_LINK + "/send-custom-verification-email",
-                {
-                    method: 'POST',
-                    mode: 'no-cors',
-                    body: JSON.stringify(
-                        {
-                            userEmail,
-                            redirectUrl: process.env.REACT_APP_EMAIL_VERIFICATION_REDIRECT_URL
-                        }
-                    ),
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json; charset=UTF-8',
-                        'Access-Control-Allow-Headers': 'Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With'
-                    },
+        const res = await fetch(
+            process.env.REACT_APP_EMAIL_VERIFICATION_LINK + "/send-custom-verification-email",
+            {
+                method: 'POST',
+                mode: 'no-cors',
+                body: JSON.stringify(
+                    {
+                        userEmail,
+                        redirectUrl: process.env.REACT_APP_EMAIL_VERIFICATION_REDIRECT_URL
+                    }
+                ),
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json; charset=UTF-8',
                 },
-            );
-            const resBody = await res.json();
+            },
+        );
+        const resBody = await res.json();
 
-            if (res.status === 401) {
-                throw new Error("401" + resBody.message);
-            }
-            if (res.status !== 200) {
-                throw Error("REACT_err :" + resBody.message);
-            }
+        if (res.status === 401) {
+            throw new Error("Server_err:" + resBody.message);
+        }
+        if (res.status !== 200) {
+            throw Error("Server_err :" + resBody.message);
+        }
 
-            return resBody
-        }
-        catch (error) {
-            toast.error(error);
-        }
+        return resBody
 
     }
 
     function verifyEmail(userEmail) {
         setError(null);
         sendVerificationEmail(userEmail)
-            .then(() => {
-                toast.success("Email sent");
-                setUserLoading(false);
-            }).catch(error => {
-                setError(error.message);
-                setUserLoading(false);
-            }
-            );
+            .then(
+                () => {
+                    toast.success("Email sent");
+                    setUserLoading(false);
+                }).catch(error => {
+                    setError(error.message);
+                    setUserLoading(false);
+                }
+                );
     }
 
     function signInUsingGoogle() {
