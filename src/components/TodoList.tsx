@@ -69,16 +69,22 @@ const TodoList: React.FC = () => {
 					<button id="submit" onClick={handleSubmit}>Add Todo</button>
 
 					{todosLoading ?
-						(<div>Loading todos...</div>) :
-						todos.length == 0 ? (
-							<div>No Todos in account {user?.displayName}</div>
-						) : (
-							todos.map((item) => {
-								return <TodoItem key={item.id} id={item.id} text={item.todo}
-									completed={item.completed}
-									onRemove={() => removeTodo(user?.uid, item.id)}
-									onToggle={() => toggleCompleted(user?.uid, item.id, item.completed)} />;
-							})
+						(
+							user.emailVerified ?
+								(<div>Loading todos...</div>) : (<div>Please verify your email!</div>)
+						)
+						:
+						(
+							todos.length == 0 ? (
+								<div>No Todos in account {user?.displayName}</div>
+							) : (
+								todos.map((item) => {
+									return <TodoItem key={item.id} id={item.id} text={item.todo}
+										completed={item.completed}
+										onRemove={() => removeTodo(user?.uid, item.id)}
+										onToggle={() => toggleCompleted(user?.uid, item.id, item.completed)} />;
+								})
+							)
 						)
 					}
 
