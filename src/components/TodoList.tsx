@@ -18,7 +18,7 @@ const TodoList: React.FC = () => {
 	const [ todosLoading, setTodosLoading ] = useState(true);
 
 	useEffect(() => {
-		if (user) {
+		if (user && user.emailVerified) {
 			setTodosLoading(true);
 			const todosColl = collection(db, "users", user?.uid, "todos");
 			const q = query(todosColl, orderBy("completed"), orderBy("createdAt", "desc"), limit(10));
