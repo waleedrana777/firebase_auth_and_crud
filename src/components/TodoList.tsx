@@ -69,10 +69,9 @@ const TodoList: React.FC = () => {
 					<button id="submit" onClick={handleSubmit}>Add Todo</button>
 
 					{todosLoading ?
-						(
-							user.emailVerified ?
-								(<div>Loading todos...</div>) : (<div>Please verify your email to load todos! </div>)
-						)
+
+						(<div>Loading todos...</div>)
+
 						:
 						(
 							user.emailVerified ?
@@ -89,7 +88,7 @@ const TodoList: React.FC = () => {
 									)
 								)
 								:
-								(<div>No access without verification! </div>)
+								(<div>Please verify your email to load todos! </div>)
 						)
 					}
 
