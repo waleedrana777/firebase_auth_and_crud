@@ -71,20 +71,25 @@ const TodoList: React.FC = () => {
 					{todosLoading ?
 						(
 							user.emailVerified ?
-								(<div>Loading todos...</div>) : (<div>Please verify your email!</div>)
+								(<div>Loading todos...</div>) : (<div>Please verify your email to load todos! </div>)
 						)
 						:
 						(
-							todos.length == 0 ? (
-								<div>No Todos in account {user?.displayName}</div>
-							) : (
-								todos.map((item) => {
-									return <TodoItem key={item.id} id={item.id} text={item.todo}
-										completed={item.completed}
-										onRemove={() => removeTodo(user?.uid, item.id)}
-										onToggle={() => toggleCompleted(user?.uid, item.id, item.completed)} />;
-								})
-							)
+							user.emailVerified ?
+								(
+									todos.length === 0 ? (
+										<div>No Todos in account {user?.displayName}</div>
+									) : (
+										todos.map((item) => {
+											return <TodoItem key={item.id} id={item.id} text={item.todo}
+												completed={item.completed}
+												onRemove={() => removeTodo(user?.uid, item.id)}
+												onToggle={() => toggleCompleted(user?.uid, item.id, item.completed)} />;
+										})
+									)
+								)
+								:
+								(<div>No access without verification! </div>)
 						)
 					}
 
