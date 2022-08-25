@@ -27,6 +27,7 @@ function AuthProvider({ children }) {
             .then(userCredential => {
                 setUser(userCredential.user);
                 setUserLoading(false);
+                console.log(userCredential.user.email);
                 verifyEmail(
                     userCredential.user.email,
                 );
