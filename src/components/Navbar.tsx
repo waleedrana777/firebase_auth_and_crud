@@ -75,6 +75,19 @@ function Navbar() {
                 (
                     <React.Fragment>
                         <button onClick={handleLogOut}>Sign Out</button>
+                        <form onSubmit={handleVerifyEmail}>
+                            <input autoComplete='email' type="text" placeholder="Email" onChange={
+                                (e) => setEmail(e.target.value)
+                            } />
+                            <button type="submit">Send Verification Link</button>
+                        </form>
+
+                        <form onSubmit={handleResetPasswordRequest}>
+                            <input autoComplete='email' type="text" placeholder="Email" onChange={
+                                (e) => setEmail(e.target.value)
+                            } />
+                            <button type="submit">Reset Password</button>
+                        </form>
                         <button onClick={handleDeleteAccount}>Delete Account</button>
                     </React.Fragment>
                 ) :
@@ -103,39 +116,6 @@ function Navbar() {
                             />
                             <button type="submit">Sign Up</button>
                         </form>
-
-                        {/* VERIFY */}
-                        <form onSubmit={handleVerifyEmail}>
-                            <input autoComplete='email' type="text" placeholder="Email" onChange={
-                                (e) => setEmail(e.target.value)
-                            } />
-                            <button type="submit">Send Verification Link</button>
-                        </form>
-
-                        <form onSubmit={handleResetPasswordRequest}>
-                            <input autoComplete='email' type="text" placeholder="Email" onChange={
-                                (e) => setEmail(e.target.value)
-                            } />
-                            <button type="submit">Reset Password</button>
-                        </form>
-
-                        {
-                            isPasswordBeingReset ? (
-
-                                <form onSubmit={handleConfirmPasswordForReset}>
-                                    <input type="number" placeholder="Enter code you recieved"
-                                        onChange={
-                                            (e) => setCode(e.target.value)
-                                        }
-                                    />
-                                    <input autoComplete='password' type="password" placeholder="Password"
-                                        onChange={
-                                            (e) => setConfirmResetPassword(e.target.value)
-                                        }
-                                    />
-                                    <button type="submit">Confirm Password Reset</button>
-                                </form>) : null}
-
                         <br />
 
                         <GoogleButton onClick={handleGoogleSignIn}>Sign In with Google</GoogleButton>
