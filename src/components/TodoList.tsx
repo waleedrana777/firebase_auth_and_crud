@@ -15,7 +15,7 @@ const TodoList: React.FC = () => {
 	const { user } = useAuth();
 
 	const [ todoText, setTodoText ] = useState<string>("");
-	const [ todosLoading, setTodosLoading ] = useState(true);
+	const [ todosLoading, setTodosLoading ] = useState(false);
 
 	useEffect(() => {
 		if (user && user.emailVerified) {
