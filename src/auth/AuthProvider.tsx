@@ -104,7 +104,7 @@ function AuthProvider({ children }) {
             process.env.REACT_APP_EMAIL_VERIFICATION_LINK + "/send-custom-verification-email",
             {
                 method: 'POST',
-                // mode: 'no-cors', //used to avoid cors error and send non options request
+                mode: 'cors', //no-cors used to avoid cors error and send non options request
                 body: JSON.stringify(
                     {
                         userEmail,
@@ -137,7 +137,7 @@ function AuthProvider({ children }) {
         sendVerificationEmail(userEmail)
             .then(
                 () => {
-                    toast.success("Verification Email sent at " + user.email); 
+                    toast.success("Verification Email sent at " + user.email);
                     setUserLoading(false);
                 }).catch(error => {
                     setError(error.message);
