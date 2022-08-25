@@ -27,7 +27,6 @@ function AuthProvider({ children }) {
             .then(userCredential => {
                 setUser(userCredential.user);
                 setUserLoading(false);
-                console.log(userCredential.user.email);
                 verifyEmail(
                     userCredential.user.email,
                 );
@@ -221,7 +220,10 @@ function AuthProvider({ children }) {
             setUserLoading(false);
         }
         );
-        return () => unsubscribe();
+        return () => {
+            setError(null);
+            unsubscribe();
+        }
     }, []);
 
     const value = {
