@@ -146,7 +146,7 @@ function AuthProvider({ children }) {
         sendVerificationEmail(userEmail)
             .then(
                 () => {
-                    toast.success("Verification Email sent at " + user.email);
+                    toast.success("Verification Email sent at " + userEmail);
                     setUserLoading(false);
                 }).catch(error => {
                     setError("verify:" + error.message);
