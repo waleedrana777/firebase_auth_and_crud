@@ -100,11 +100,20 @@ function AuthProvider({ children }) {
             return;
         }
 
+        //if mode: cors not specified, it will give
+        //Access to fetch at _______________ from origin ______________
+        // has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is
+        // present on the requested resource. If an opaque response serves your needs,
+        // set the request's mode to 'no-cors' to fetch the resource with CORS disabled.
+        // https://www.stackhawk.com/blog/react-cors-guide-what-it-is-and-how-to-enable-it/
+
         const res = await fetch(
             process.env.REACT_APP_EMAIL_VERIFICATION_LINK + "/send-custom-verification-email",
             {
                 method: 'POST',
-                mode: 'cors', //no-cors used to avoid cors error and send non options request
+                //no-cors used to avoid cors error and send non options request but that is a hack
+                // and prevents you from using other http methods like PUT, DELETE, etc
+                mode: 'cors',
                 body: JSON.stringify(
                     {
                         userEmail,
