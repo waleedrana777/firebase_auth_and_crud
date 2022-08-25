@@ -1,21 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import GoogleButton from 'react-google-button';
 import { useAuth } from '../auth/AuthProvider';
-import { useParams } from "react-router-dom";
 
 function Navbar() {
     const { user, userLoading, signIn, signInUsingGoogle, signUp, verifyEmail, logOut, resetPassword, handleConfirmPasswordReset, deleteAccount } = useAuth();
-    const { reload } = useParams();
     const [ email, setEmail ] = useState("");
     const [ password, setPassword ] = useState("");
     const [ confirmResetPassword, setConfirmResetPassword ] = useState("");
     const [ code, setCode ] = useState("");
-
-    useEffect(() => {
-        if (user && reload) {
-            user.reload();
-        }
-    }, [ user, reload ]);
 
     function handleSignInWithPassword(e) {
         e.preventDefault();

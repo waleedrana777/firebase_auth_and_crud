@@ -5,6 +5,7 @@ import { signInWithEmailAndPassword, signInWithPopup, createUserWithEmailAndPass
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { nanoid } from 'nanoid';
+import { useParams } from "react-router-dom";
 
 const provider = new GoogleAuthProvider();
 const AuthContext = React.createContext(null);
@@ -14,6 +15,8 @@ export function useAuth() {
 }
 
 function AuthProvider({ children }) {
+    const { reload } = useParams();
+
 
     const [ user, setUser ] = useState(null);
     const [ userLoading, setUserLoading ] = useState(true);
@@ -27,9 +30,11 @@ function AuthProvider({ children }) {
             .then(userCredential => {
                 setUser(userCredential.user);
                 setUserLoading(false);
-                verifyEmail(
-                    userCredential.user.email,
-                );
+                if (!userCredential.user.emailVerified) {
+                    verifyEmail(
+                        userCredential.user.email,
+                    );
+                }
             }).catch(error => {
                 setError("hereee" + error);
                 setUserLoading(false);
@@ -212,6 +217,22 @@ function AuthProvider({ children }) {
     }
 
     useEffect(() => {
+        if (user && reload) {
+            user.reload();
+        }
+    }, [ user, reload ]);
+
+    useEffect(() => {
+        // if (user) {
+            // user.getIdTokenResult().then(idTokenResult => {
+            //     setUserLoading(false);
+            //     setUser(idTokenResult.claims);
+            // }).catch(error => {
+            //     setError(error);
+            //     setUserLoading(false);
+            // }
+            // );
+        // }
         const unsubscribe = auth.onAuthStateChanged(user => {
             setUser(user);
             setUserLoading(false);
