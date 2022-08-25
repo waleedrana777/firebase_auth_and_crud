@@ -31,7 +31,7 @@ function AuthProvider({ children }) {
                     userCredential.user.email,
                 );
             }).catch(error => {
-                setError(error);
+                setError("hereee" + error);
                 setUserLoading(false);
             }
             );
