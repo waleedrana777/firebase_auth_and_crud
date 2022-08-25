@@ -74,12 +74,15 @@ function Navbar() {
             ) : (user ?
                 (
                     <React.Fragment>
+                        <button onClick={handleLogOut}>Sign Out</button>
                         {!user.emailVerified ? (
-                            <><button onClick={handleLogOut}>Sign Out</button><form onSubmit={handleVerifyEmail}>
-                                <input autoComplete='email' type="text" placeholder="Email" onChange={(e) => setEmail(e.target.value)} />
-                                <button type="submit">Send Verification Link</button>
-                            </form></>) : null}
-
+                            <>
+                                <form onSubmit={handleVerifyEmail}>
+                                    <input autoComplete='email' type="text" placeholder="Email" onChange={(e) => setEmail(e.target.value)} />
+                                    <button type="submit">Send Verification Link</button>
+                                </form></>) :
+                            null
+                        }
 
                         <form onSubmit={handleResetPasswordRequest}>
                             <input autoComplete='email' type="text" placeholder="Email" onChange={
