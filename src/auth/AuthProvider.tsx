@@ -153,7 +153,6 @@ function AuthProvider({ children }) {
                     setUserLoading(false);
                 }
                 );
-        user.reload();
     }
 
     function signInUsingGoogle() {

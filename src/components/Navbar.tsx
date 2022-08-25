@@ -1,15 +1,21 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import GoogleButton from 'react-google-button';
 import { useAuth } from '../auth/AuthProvider';
 
 
 function Navbar() {
-    const { user, userLoading, signIn, signInUsingGoogle, signUp, verifyEmail, logOut, resetPassword, isPasswordBeingReset, handleConfirmPasswordReset, deleteAccount } = useAuth();
+    const { user, userLoading, signIn, signInUsingGoogle, signUp, verifyEmail, logOut, resetPassword, handleConfirmPasswordReset, deleteAccount } = useAuth();
 
     const [ email, setEmail ] = useState("");
     const [ password, setPassword ] = useState("");
     const [ confirmResetPassword, setConfirmResetPassword ] = useState("");
     const [ code, setCode ] = useState("");
+
+    useEffect(() => {
+        if (user) {
+            user.reload();
+        }
+    }, []);
 
     function handleSignInWithPassword(e) {
         e.preventDefault();
