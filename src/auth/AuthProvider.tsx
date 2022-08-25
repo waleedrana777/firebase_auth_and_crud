@@ -149,7 +149,7 @@ function AuthProvider({ children }) {
                     toast.success("Verification Email sent at " + user.email);
                     setUserLoading(false);
                 }).catch(error => {
-                    setError(error.message);
+                    setError("verify:" + error.message);
                     setUserLoading(false);
                 }
                 );
