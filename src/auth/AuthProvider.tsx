@@ -17,10 +17,41 @@ export function useAuth() {
 function AuthProvider({ children }) {
     const { reload } = useParams();
 
-
     const [ user, setUser ] = useState(null);
     const [ userLoading, setUserLoading ] = useState(true);
     const [ error, setError ] = useState(null);
+
+    useEffect(() => {
+        if (reload) {
+            toast.success("Email verified: ", user.email);
+            setUser(auth.currentUser);
+        }
+    }, [ reload ]);
+
+    useEffect(() => {
+        // if (user) {
+        // user.getIdTokenResult().then(idTokenResult => {
+        //     setUserLoading(false);
+        //     setUser(idTokenResult.claims);
+        // }).catch(error => {
+        //     setError(error);
+        //     setUserLoading(false);
+        // }
+        // );
+        // }
+        const unsubscribe = auth.onAuthStateChanged(user => {
+            setUser(user);
+            setUserLoading(false);
+        }, error => {
+            setError(error);
+            setUserLoading(false);
+        }
+        );
+        return () => {
+            setError(null);
+            unsubscribe();
+        }
+    }, []);
 
     function signUp(email, password) {
         setUserLoading(true);
@@ -214,37 +245,6 @@ function AuthProvider({ children }) {
         );
         return null;
     }
-
-    useEffect(() => {
-        if (reload) {
-            setUser(auth.currentUser);
-        }
-    }, [ reload ]);
-
-    useEffect(() => {
-        // if (user) {
-        // user.getIdTokenResult().then(idTokenResult => {
-        //     setUserLoading(false);
-        //     setUser(idTokenResult.claims);
-        // }).catch(error => {
-        //     setError(error);
-        //     setUserLoading(false);
-        // }
-        // );
-        // }
-        const unsubscribe = auth.onAuthStateChanged(user => {
-            setUser(user);
-            setUserLoading(false);
-        }, error => {
-            setError(error);
-            setUserLoading(false);
-        }
-        );
-        return () => {
-            setError(null);
-            unsubscribe();
-        }
-    }, []);
 
     const value = {
         user,
