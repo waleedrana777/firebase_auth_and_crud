@@ -22,11 +22,11 @@ function AuthProvider({ children }) {
     const [ error, setError ] = useState(null);
 
     useEffect(() => {
-        if (reload) {
+        if (reload && user) {
             setUser(auth.currentUser);
             window.location.reload();
         }
-    }, [ reload ]);
+    }, [ reload, user ]);
 
     useEffect(() => {
         // if (user) {
