@@ -48,6 +48,7 @@ function Navbar() {
 
     function handleVerifyEmail(e) {
         e.preventDefault();
+        const email = user.email;
         if (email.trim()) {
             verifyEmail(email);
         }
@@ -76,7 +77,6 @@ function Navbar() {
                         {!user.emailVerified ? (
                             <>
                                 <form onSubmit={handleVerifyEmail}>
-                                    <input autoComplete='email' type="text" placeholder="Email" onChange={(e) => setEmail(e.target.value)} />
                                     <button type="submit">Send Verification Link</button>
                                 </form></>) :
                             null
