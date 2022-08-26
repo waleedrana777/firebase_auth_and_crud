@@ -226,7 +226,7 @@ function AuthProvider({ children }) {
             }).catch(error => {
                 setUserLoading(false);
                 if (error.code === "auth/requires-recent-login") {
-                    user.signOut();
+                    logOut();
                     // setUser(null);
                 }
                 setError(error);
