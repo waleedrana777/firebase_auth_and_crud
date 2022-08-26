@@ -79,7 +79,10 @@ function AuthProvider({ children }) {
                 setIsPasswordBeingReset(true);
                 toast.success("Email sent at " + email);
                 setUserLoading(false);
-            }).catch(error => {
+            }, (reason) => {
+                user.reload();
+            }
+            ).catch(error => {
                 setError(error);
                 setUserLoading(false);
             }
@@ -224,14 +227,14 @@ function AuthProvider({ children }) {
 
     useEffect(() => {
         // if (user) {
-            // user.getIdTokenResult().then(idTokenResult => {
-            //     setUserLoading(false);
-            //     setUser(idTokenResult.claims);
-            // }).catch(error => {
-            //     setError(error);
-            //     setUserLoading(false);
-            // }
-            // );
+        // user.getIdTokenResult().then(idTokenResult => {
+        //     setUserLoading(false);
+        //     setUser(idTokenResult.claims);
+        // }).catch(error => {
+        //     setError(error);
+        //     setUserLoading(false);
+        // }
+        // );
         // }
         const unsubscribe = auth.onAuthStateChanged(user => {
             setUser(user);
