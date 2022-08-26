@@ -21,7 +21,6 @@ function AuthProvider({ children }) {
     const [ user, setUser ] = useState(null);
     const [ userLoading, setUserLoading ] = useState(true);
     const [ error, setError ] = useState(null);
-    const [ isPasswordBeingReset, setIsPasswordBeingReset ] = useState(false);
 
     function signUp(email, password) {
         setUserLoading(true);
@@ -75,24 +74,30 @@ function AuthProvider({ children }) {
     function resetPassword(email) {
         setError(null);
         sendPasswordResetEmail(auth, email, actionCodeSettings)
-            .then(() => {
-                setIsPasswordBeingReset(true);
-                toast.success("Email sent at " + email);
-                setUserLoading(false);
-            }, (reason) => {
-                user.reload();
-            }
+            .then(
+                //on resolve
+                () => {
+                    toast.success("Email sent at " + email);
+                    setUserLoading(false);
+                }
             ).catch(error => {
-                setError(error);
-                setUserLoading(false);
-            }
-            );
+                setUser(auth.currentUser);
+                sendPasswordResetEmail(auth, email, actionCodeSettings).then(
+                    () => {
+                        toast.success("Email sent at " + email);
+                        setUserLoading(false);
+                    }
+                ).catch(error => {
+                    setError(error);
+                    setUserLoading(false);
+                }
+                );
+            });
     }
 
     function handleConfirmPasswordReset(code, password) {
         confirmPasswordReset(auth, code, password)
             .then(() => {
-                setIsPasswordBeingReset(false);
                 toast.success("Password reset");
                 setUserLoading(false);
             }).catch(error => {
@@ -261,7 +266,6 @@ function AuthProvider({ children }) {
         verifyEmail,
         logOut,
         resetPassword,
-        isPasswordBeingReset,
         handleConfirmPasswordReset,
         deleteAccount,
         provider
