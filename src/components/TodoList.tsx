@@ -18,7 +18,7 @@ const TodoList: React.FC = () => {
 	const [ todosLoading, setTodosLoading ] = useState(false);
 
 	useEffect(() => {
-		toast.success(user.emailVerified);
+		toast.success("Email verified: ", user.emailVerified);
 		if (user && user.emailVerified) {
 			setTodosLoading(true);
 			const todosColl = collection(db, "users", user?.uid, "todos");

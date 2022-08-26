@@ -225,10 +225,10 @@ function AuthProvider({ children }) {
     }
 
     useEffect(() => {
-        if (user && reload) {
-            user.reload();
+        if (reload) {
+            setUser(auth.currentUser);
         }
-    }, [ user, reload ]);
+    }, [ reload ]);
 
     useEffect(() => {
         // if (user) {
