@@ -23,8 +23,8 @@ function AuthProvider({ children }) {
 
     useEffect(() => {
         if (reload) {
-            toast.success("Email verified: ", user.email);
             setUser(auth.currentUser);
+            toast.success("Email verified: " + user.email);
         }
     }, [ reload ]);
 
