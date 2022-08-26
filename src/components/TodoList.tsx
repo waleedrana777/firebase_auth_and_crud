@@ -18,11 +18,12 @@ const TodoList: React.FC = () => {
 	const [ todosLoading, setTodosLoading ] = useState(false);
 
 	useEffect(() => {
+		toast.success(user.emailVerified);
 		if (user && user.emailVerified) {
 			setTodosLoading(true);
 			const todosColl = collection(db, "users", user?.uid, "todos");
 			const q = query(todosColl, orderBy("completed"), orderBy("createdAt", "desc"), limit(10));
-			var unsubscribe = ()=>{};
+			var unsubscribe = () => { };
 			try {
 				unsubscribe = onSnapshot(q, (snapshot) => {
 					var fetchedTodos: Todo[] = [];
