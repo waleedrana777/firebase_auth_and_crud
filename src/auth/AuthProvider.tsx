@@ -227,9 +227,11 @@ function AuthProvider({ children }) {
                 setUserLoading(false);
                 if (error.code === "auth/requires-recent-login") {
                     logOut();
-                    // setUser(null);
+                    setError("Session too old! Please login again to delete account");
                 }
-                setError(error);
+                else {
+                    setError(error);
+                }
             }
             );
     }
