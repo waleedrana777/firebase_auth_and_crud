@@ -77,7 +77,7 @@ function Navbar() {
                         {!user.emailVerified ? (
                             <>
                                 <form onSubmit={handleVerifyEmail}>
-                                    <button type="submit">Send Verification Link</button>
+                                    <button type="submit">Send Verification Link at your email!</button>
                                 </form></>) :
                             null
                         }
