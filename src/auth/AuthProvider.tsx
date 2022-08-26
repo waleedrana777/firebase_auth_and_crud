@@ -81,17 +81,8 @@ function AuthProvider({ children }) {
                     setUserLoading(false);
                 }
             ).catch(error => {
-                setUser(auth.currentUser);
-                sendPasswordResetEmail(auth, email, actionCodeSettings).then(
-                    () => {
-                        toast.success("Email sent at " + email);
-                        setUserLoading(false);
-                    }
-                ).catch(error => {
-                    setError(error);
-                    setUserLoading(false);
-                }
-                );
+                setError(error);
+                setUserLoading(false);
             });
     }
 
