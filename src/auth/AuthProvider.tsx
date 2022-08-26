@@ -224,8 +224,12 @@ function AuthProvider({ children }) {
                 setUser(null);
                 setUserLoading(false);
             }).catch(error => {
-                setError(error);
                 setUserLoading(false);
+                if (error.code === "auth/requires-recent-login") {
+                    user.signOut();
+                    // setUser(null);
+                }
+                setError(error);
             }
             );
     }
