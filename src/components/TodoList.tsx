@@ -18,7 +18,7 @@ const TodoList: React.FC = () => {
 	const [ todosLoading, setTodosLoading ] = useState(false);
 
 	useEffect(() => {
-		var unsubscribe;
+		var unsubscribe = () => { };
 		try {
 			if (user && user.emailVerified) {
 				setTodosLoading(true);
