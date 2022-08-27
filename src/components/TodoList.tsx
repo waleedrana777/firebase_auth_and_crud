@@ -44,7 +44,7 @@ const TodoList: React.FC = () => {
 		}
 
 	}
-		, [ user ]);
+		, [ user, user.emailVerified ]);
 
 	const handleSubmit = e => {
 		e.preventDefault();
