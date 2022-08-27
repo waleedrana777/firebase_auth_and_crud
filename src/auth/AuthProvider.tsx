@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { auth } from '../firebase/db';
+import { useStore } from "../store/store";
 import { confirmPasswordReset, GoogleAuthProvider } from "firebase/auth";
 import { signInWithEmailAndPassword, signInWithPopup, createUserWithEmailAndPassword, signOut, sendPasswordResetEmail, sendEmailVerification } from 'firebase/auth';
 import { ToastContainer, toast } from 'react-toastify';
@@ -16,6 +17,7 @@ export function useAuth() {
 
 function AuthProvider({ children }) {
     const { reload } = useParams();
+	const { todos, addTodo, setTodos, removeTodo, toggleCompleted } = useStore();
 
     const [ user, setUser ] = useState(null);
     const [ userLoading, setUserLoading ] = useState(true);
@@ -88,6 +90,7 @@ function AuthProvider({ children }) {
 
     function logOut() {
         signOut(auth).then(() => {
+            setTodos([]);
             setUser(null);
             setError(null);
         }).catch(error => {

@@ -32,6 +32,8 @@ const TodoList: React.FC = () => {
 							...doc.data(),
 						} as Todo);
 					});
+					//must set to empty when unsubscribed/logged out because if a non verified user logs in, the todos will still be there
+					//when verified user logs in 
 					setTodos(fetchedTodos);
 				});
 				setTodosLoading(false);
