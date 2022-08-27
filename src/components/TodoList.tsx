@@ -18,31 +18,32 @@ const TodoList: React.FC = () => {
 	const [ todosLoading, setTodosLoading ] = useState(false);
 
 	useEffect(() => {
-		if (user && user.emailVerified) {
-			setTodosLoading(true);
-			const todosColl = collection(db, "users", user?.uid, "todos");
-			const q = query(todosColl, orderBy("completed"), orderBy("createdAt", "desc"), limit(10));
-			var unsubscribe = () => { };
-			unsubscribe = onSnapshot(q, (snapshot) => {
-				var fetchedTodos: Todo[] = [];
-				snapshot.forEach((doc) => {
-					fetchedTodos.push({
-						id: doc.id,
-						...doc.data(),
-					} as Todo);
+		try {
+			if (user && user.emailVerified) {
+				setTodosLoading(true);
+				const todosColl = collection(db, "users", user?.uid, "todos");
+				const q = query(todosColl, orderBy("completed"), orderBy("createdAt", "desc"), limit(10));
+				const unsubscribe = onSnapshot(q, (snapshot) => {
+					var fetchedTodos: Todo[] = [];
+					snapshot.forEach((doc) => {
+						fetchedTodos.push({
+							id: doc.id,
+							...doc.data(),
+						} as Todo);
+					});
+					setTodos(fetchedTodos);
 				});
-				setTodos(fetchedTodos);
-			});
-		}
-		setTodosLoading(false);
-		return () => {
-			toast.info("Unsubscribing from todos");
-			unsubscribe();
-		}
+				setTodosLoading(false);
+				return () => {
+					toast.info("Unsubscribing from todos");
+					unsubscribe();
+				}
+			}
 
-
-	}
-		, [ user, user.emailVerified ]);
+		} catch (error) {
+			toast.error(error.message);
+		}
+	}, [ user, user.emailVerified ]);
 
 	const handleSubmit = e => {
 		e.preventDefault();
