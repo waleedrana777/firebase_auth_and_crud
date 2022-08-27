@@ -23,25 +23,23 @@ const TodoList: React.FC = () => {
 			const todosColl = collection(db, "users", user?.uid, "todos");
 			const q = query(todosColl, orderBy("completed"), orderBy("createdAt", "desc"), limit(10));
 			var unsubscribe = () => { };
-			try {
-				unsubscribe = onSnapshot(q, (snapshot) => {
-					var fetchedTodos: Todo[] = [];
-					snapshot.forEach((doc) => {
-						fetchedTodos.push({
-							id: doc.id,
-							...doc.data(),
-						} as Todo);
-					});
-					setTodos(fetchedTodos);
+			unsubscribe = onSnapshot(q, (snapshot) => {
+				var fetchedTodos: Todo[] = [];
+				snapshot.forEach((doc) => {
+					fetchedTodos.push({
+						id: doc.id,
+						...doc.data(),
+					} as Todo);
 				});
-			}
-			catch (e) {
-				toast.error("Not allowed by firebase rules");
-			}
-			setTodosLoading(false);
-
-			return () => unsubscribe();
+				setTodos(fetchedTodos);
+			});
 		}
+		setTodosLoading(false);
+		return () => {
+			toast.info("Unsubscribing from todos");
+			unsubscribe();
+		}
+
 
 	}
 		, [ user, user.emailVerified ]);
