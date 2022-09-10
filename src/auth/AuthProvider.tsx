@@ -17,7 +17,7 @@ export function useAuth() {
 
 function AuthProvider({ children }) {
     const { reload } = useParams();
-	const { todos, addTodo, setTodos, removeTodo, toggleCompleted } = useStore();
+    const { todos, addTodo, setTodos, removeTodo, toggleCompleted } = useStore();
 
     const [ user, setUser ] = useState(null);
     const [ userLoading, setUserLoading ] = useState(true);
@@ -213,7 +213,7 @@ function AuthProvider({ children }) {
                 // const email = error.customData.email;
                 // The AuthCredential type that was used.
                 const credential = GoogleAuthProvider.credentialFromError(error);
-                setError(errorMessage);
+                setError(error);
                 setUserLoading(false);
             }
             );

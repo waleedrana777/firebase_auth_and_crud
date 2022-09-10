@@ -106,7 +106,7 @@ export const createUser = functions.auth.user().onCreate((user) => {
 		lastName: "",
 		email: user.email,
 		contactNumber: "",
-	});
+	}); 	
 
 });
 
