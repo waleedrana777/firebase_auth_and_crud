@@ -86,7 +86,7 @@ const TodoList: React.FC = () => {
 							user.emailVerified ?
 								(
 									todos.length === 0 ? (
-										<div>No Todos in account {user?.displayName}</div>
+										<div>No Todos in account {user?.displayName} yet!</div>
 									) : (
 										todos.map((item) => {
 											return <TodoItem key={item.id} id={item.id} text={item.todo}
